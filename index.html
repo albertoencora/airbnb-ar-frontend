@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+
+  <!-- 🔥 CLAVE PARA MÓVIL -->
+ 
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+  <title>Airbnb AR Assistant</title>
+
+  <!-- A-Frame -->
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    a-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+    }
+
+    /* 🔥 UI ENCIMA DEL AR */
+    #ui {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      gap: 8px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    #ui input {
+      width: 220px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+
+    #ui button {
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: none;
+      background: #00c853;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ESCENA AR -->
+  <a-scene
+  embedded
+  arjs="sourceType: webcam; debugUIEnabled: false;"
+>
+  <a-camera gps-camera rotation-reader></a-camera>
+
+  <!-- PANEL AR -->
+  <a-entity id="arPanel" position="0 0 -1.5" visible="false">
+    <a-plane width="1.8" height="1" color="#111" opacity="0.75"></a-plane>
+    <a-text
+      id="arText"
+      value=""
+      width="1.6"
+      color="#FFFFFF"
+      align="center"
+      position="0 0 0.01"
+      wrap-count="40">
+    </a-text>
+  </a-entity>
+</a-scene>
+
+
+  <!-- 🔥 UI HTML -->
+  <div id="ui">
+    <input
+      id="questionInput"
+      placeholder="Ej: ¿A qué hora es el check-in?"
+    />
+    <button onclick="askAI()">Enviar</button>
+  </div>
+
+  <script>
+    function showARAnswer(text) {
+      const panel = document.getElementById("arPanel");
+      const arText = document.getElementById("arText");
+
+      arText.setAttribute("value", text);
+      panel.setAttribute("visible", "true");
+
+      panel.setAttribute("animation", {
+        property: "scale",
+        from: "0.5 0.5 0.5",
+        to: "1 1 1",
+        dur: 400,
+        easing: "easeOutElastic"
+      });
+    }
+
+    async function askAI() {
+      const input = document.getElementById("questionInput");
+      if (!input.value) return;
+
+      const res = await fetch(
+        "https://gayla-subcalibre-destiny.ngrok-free.dev/ask",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            property_id: "demo_property",
+            question: input.value
+          })
+        }
+      );
+
+      const data = await res.json();
+      showARAnswer(data.answer);
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
