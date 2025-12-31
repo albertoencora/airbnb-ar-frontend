@@ -80,7 +80,7 @@
   <!-- PANEL AR PEGADO A LA CÁMARA -->
   <a-entity
     id="arPanel"
-    position="0 -0.3 -1.2"
+    position="0 0 -2"
     visible="false">
 
     <a-plane
@@ -117,6 +117,15 @@
       position="0 0 0.01"
       wrap-count="40">
     </a-text>
+    <a-animation
+     attribute="position"
+     direction="alternate"
+     dur="3000"
+     from="0 0 -2"
+     to="0 0.15 -2"
+     repeat="indefinite"
+     easing="easeInOutSine">
+   </a-animation>
   </a-entity>
 </a-scene>
 
