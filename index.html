@@ -106,7 +106,15 @@
 
 
   <!-- PANEL AR -->
-  <a-entity id="arPanel" position="0 0 -1.5" visible="false">
+  <a-entity id="arPanel" 
+            position="0 0 -1.5" 
+            visible="false"  
+            animation="property: position;
+               dir: alternate;
+               dur: 3000;
+               easing: easeInOutSine;
+               loop: true;
+               to: 0 0.15 -2">
     <a-plane width="1.8" height="1" color="#111" opacity="0.75"></a-plane>
     <a-text
       id="arText"
@@ -117,16 +125,7 @@
       position="0 0 0.01"
       wrap-count="40">
     </a-text>
-    <a-animation
-     attribute="position"
-     direction="alternate"
-     dur="3000"
-     from="0 0 -2"
-     to="0 0.15 -2"
-     repeat="indefinite"
-     easing="easeInOutSine">
-   </a-animation>
-  </a-entity>
+    </a-entity>
 </a-scene>
 
 
