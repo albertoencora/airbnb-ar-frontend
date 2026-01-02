@@ -130,43 +130,50 @@
   </div>
 
   <script>
-    function showARAnswer(text) {
-      const panel = document.getElementById("arPanel");
-      const arText = document.getElementById("arText");
+  let hideTimer = null;
 
-      arText.setAttribute("value", text);
-      panel.setAttribute("visible", "true");
+  function showARAnswer(text) {
+    const panel = document.getElementById("arPanel");
+    const arText = document.getElementById("arText");
 
-      panel.setAttribute("animation", {
-        property: "scale",
-        from: "0.5 0.5 0.5",
-        to: "1 1 1",
-        dur: 400,
-        easing: "easeOutElastic"
-      });
+    arText.setAttribute("value", text);
+
+    // Mostrar panel
+    panel.setAttribute("scale", "1 1 1");
+
+    // Cancelar ocultado previo
+    if (hideTimer) {
+      clearTimeout(hideTimer);
     }
 
-    async function askAI() {
-      const input = document.getElementById("questionInput");
-      if (!input.value) return;
+    // Auto-ocultar después de 8s
+    hideTimer = setTimeout(() => {
+      panel.setAttribute("scale", "0 0 0");
+    }, 8000);
+  }
 
-      const res = await fetch(
-        "https://gayla-subcalibre-destiny.ngrok-free.dev/ask",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            property_id: "demo_property",
-            question: input.value
-          })
-        }
-      );
+  async function askAI() {
+    const input = document.getElementById("questionInput");
+    if (!input.value) return;
 
-      const data = await res.json();
-      showARAnswer(data.answer);
-      input.value = "";
-    }
-  </script>
+    const res = await fetch(
+      "https://gayla-subcalibre-destiny.ngrok-free.dev/ask",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          property_id: "demo_property",
+          question: input.value
+        })
+      }
+    );
+
+    const data = await res.json();
+    showARAnswer(data.answer);
+    input.value = "";
+  }
+</script>
+
 
 </body>
 </html>
