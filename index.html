@@ -131,6 +131,28 @@
 
   <script>
   let hideTimer = null;
+  let currentUtterance = null;
+
+  function speak(text, lang = "es-ES") {
+    // Cancelar voz previa
+    if (currentUtterance) {
+      window.speechSynthesis.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function detectLanguage(text) {
+    const hasEnglish = /the|is|are|check/i.test(text);
+    return hasEnglish ? "en-US" : "es-ES";
+  }
 
   function showARAnswer(text) {
     const panel = document.getElementById("arPanel");
@@ -140,6 +162,10 @@
 
     // Mostrar panel
     panel.setAttribute("scale", "1 1 1");
+
+    // 🔊 HABLAR
+    const lang = detectLanguage(text);
+    speak(text, lang);
 
     // Cancelar ocultado previo
     if (hideTimer) {
@@ -173,6 +199,7 @@
     input.value = "";
   }
 </script>
+
 
 
 </body>
