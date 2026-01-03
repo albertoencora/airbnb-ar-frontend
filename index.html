@@ -143,7 +143,13 @@
     }
   };
 
-  const CURRENT_PROPERTY = "demo_property";
+  function getPropertyFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("property") || "demo_property";
+}
+
+const CURRENT_PROPERTY = getPropertyFromURL();
+
 </script>
 
   <script>
@@ -216,7 +222,7 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          property_id: "demo_property",
+          property_id: CURRENT_PROPERTY,
           question: input.value
         })
       }
