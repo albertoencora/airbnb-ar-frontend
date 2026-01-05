@@ -68,10 +68,15 @@
   vr-mode-ui="enabled: false"
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
 >
-
+ <a-assets>
+    <a-asset-item
+    id="robotoFont"
+    src="https://cdn.aframe.io/fonts/Roboto-msdf.json">
+     </a-asset-item>
+  </a-assets>
 
   <a-camera position="0 0 0" look-controls="enabled: false">
-
+  
     <!-- CONTENEDOR FLOTANTE (ANIMADO) -->
     <a-entity
       id="arFloat"
@@ -113,12 +118,7 @@
     </a-entity>
 
   </a-camera>
-  <a-assets>
-  <a-asset-item
-    id="robotoFont"
-    src="https://cdn.aframe.io/fonts/Roboto-msdf.json">
-  </a-asset-item>
-</a-assets>
+ 
 </a-scene>
 
   <!-- 🔥 UI HTML -->
