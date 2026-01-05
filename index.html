@@ -208,55 +208,27 @@ const CURRENT_PROPERTY = getPropertyFromURL();
     window.speechSynthesis.cancel();
   }
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = CURRENT_LANG;
-  utterance.rate = 0.95;
-  utterance.pitch = 1;
-  utterance.volume = 1;
-
-  currentUtterance = utterance;
-  window.speechSynthesis.speak(utterance);
 }
 
+function showARAnswer(text) {
+  const panel = document.getElementById("arPanel");
+  const arText = document.getElementById("arText");
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang;
-    utterance.rate = 0.95;
-    utterance.pitch = 1;
-    utterance.volume = 1;
+  if (!panel || !arText) return;
 
-    currentUtterance = utterance;
-    window.speechSynthesis.speak(utterance);
-  
+  arText.setAttribute("value", text);
+  panel.setAttribute("scale", "1 1 1");
 
-  function detectLanguage(text) {
-    const hasEnglish = /the|is|are|check/i.test(text);
-   return hasEnglish ? "en-US" : "es-ES";
-  }
+  // 🔊 HABLAR (idioma unificado)
+  speak(text);
 
-  function showARAnswer(text) {
-    const panel = document.getElementById("arPanel");
-    const arText = document.getElementById("arText");
+  if (hideTimer) clearTimeout(hideTimer);
 
-    arText.setAttribute("value", text);
+  hideTimer = setTimeout(() => {
+    panel.setAttribute("scale", "0 0 0");
+  }, 8000);
+}
 
-    // Mostrar panel
-    panel.setAttribute("scale", "1 1 1");
-
-    // 🔊 HABLAR
-    const lang = detectLanguage(text);
-    speak(text, lang);
-
-    // Cancelar ocultado previo
-    if (hideTimer) {
-      clearTimeout(hideTimer);
-    }
-
-    // Auto-ocultar después de 8s
-    hideTimer = setTimeout(() => {
-      panel.setAttribute("scale", "0 0 0");
-    }, 8000);
-  }
 
   async function askAI() {
     const input = document.getElementById("questionInput");
@@ -286,11 +258,13 @@ const CURRENT_PROPERTY = getPropertyFromURL();
     const scene = document.querySelector("a-scene");
 
     input.addEventListener("focus", () => {
-      scene.style.display = "none";
+      scene.style.visibility = "hidden";
+      scene.style.pointerEvents = "none";
     });
 
     input.addEventListener("blur", () => {
-      scene.style.display = "block";
+       scene.style.visibility = "visible";
+       scene.style.pointerEvents = "auto";
     });
 </script>
 <script>
