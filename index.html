@@ -66,7 +66,12 @@
 </head>
 
 <body>
-
+<a-assets>
+  <a-asset-item
+    id="robotoFont"
+    src="https://cdn.aframe.io/fonts/Roboto-msdf.json">
+  </a-asset-item>
+</a-assets>
   <!-- ESCENA AR -->
 <a-scene
   vr-mode-ui="enabled: false"
@@ -101,13 +106,15 @@
         </a-plane>
 
         <a-text
-          id="arText"
-          value=""
-          width="1.6"
-          color="#FFFFFF"
-          align="center"
-          position="0 0 0.01"
-          wrap-count="40">
+           id="arText"
+           value=""
+           width="1.4"
+           color="#FFFFFF"
+           align="center"
+           position="0 0 0.06"
+           font="#robotoFont"
+           wrap-count="28"
+           shader="msdf">
         </a-text>
 
       </a-entity>
@@ -192,9 +199,12 @@ const CURRENT_PROPERTY = getPropertyFromURL();
     const panel = document.getElementById("arPanel");
     const arText = document.getElementById("arText");
 
+    arText.setAttribute("value", " ");
+    setTimeout(() => {
     arText.setAttribute("value", text);
+    }, 50);
 
-    // Mostrar panel
+    // Mostrar panel total ago732583 , oct268131 ,nov269112 dic273174 enero275928
     panel.setAttribute("scale", "1 1 1");
 
     // 🔊 HABLAR
