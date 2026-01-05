@@ -23,12 +23,14 @@
       height: 100%;
       overflow: hidden;
       font-family: sans-serif;
+      
     }
 
     a-scene {
       position: fixed;
       inset: 0;
       z-index: 1;
+      
     }
 
     /* 🔥 UI ENCIMA DEL AR */
@@ -72,6 +74,12 @@
   vr-mode-ui="enabled: false"
   embedded
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
+  vr-mode-ui="enabled: false"
+  embedded
+  arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
+  renderer="logarithmicDepthBuffer: true"
+  device-orientation-permission-ui="enabled: false"
+  cursor="rayOrigin: mouse"
 >
 
   <a-camera position="0 0 0" look-controls="enabled: false">
@@ -144,6 +152,20 @@
   }
 
   const CURRENT_LANG = getCurrentLanguage();
+</script>
+<script>
+  const input = document.getElementById("questionInput");
+  const scene = document.querySelector("a-scene");
+
+  input.addEventListener("focus", () => {
+    // Desactivar interacción AR temporalmente
+    scene.pause();
+  });
+
+  input.addEventListener("blur", () => {
+    // Reactivar AR
+    scene.play();
+  });
 </script>
 
 <script>
