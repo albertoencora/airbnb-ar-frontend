@@ -23,14 +23,12 @@
       height: 100%;
       overflow: hidden;
       font-family: sans-serif;
-      
     }
 
     a-scene {
       position: fixed;
       inset: 0;
       z-index: 1;
-      
     }
 
     /* 🔥 UI ENCIMA DEL AR */
@@ -74,52 +72,49 @@
   vr-mode-ui="enabled: false"
   embedded
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
-  vr-mode-ui="enabled: false"
-  embedded
-  arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
-  renderer="logarithmicDepthBuffer: true"
-  device-orientation-permission-ui="enabled: false"
-  cursor="rayOrigin: mouse"
 >
 
   <a-camera position="0 0 0" look-controls="enabled: false">
 
-  <a-entity
-    id="arFloat"
-    position="0 0 -2"
-    animation="property: position;
-               dir: alternate;
-               dur: 3000;
-               easing: easeInOutSine;
-               loop: true;
-               to: 0 0.15 -2">
+    <!-- CONTENEDOR FLOTANTE (ANIMADO) -->
+    <a-entity
+      id="arFloat"
+      position="0 0 -2"
+      animation="property: position;
+                 dir: alternate;
+                 dur: 3000;
+                 easing: easeInOutSine;
+                 loop: true;
+                 to: 0 0.15 -2">
 
-    <a-entity id="arPanel" scale="0 0 0">
+      <!-- PANEL AR (ÚNICO) -->
+      <a-entity
+        id="arPanel"
+        scale="0 0 0">
 
-      <a-plane
-        id="arPlane"
-        width="1.8"
-        height="1"
-        color="#111"
-        opacity="0.85">
-      </a-plane>
+        <a-plane
+          id="arPlane"
+          width="1.8"
+          height="1"
+          color="#111"
+          opacity="0.85">
+        </a-plane>
 
-      <a-text
-        id="arText"
-        value=""
-        width="1.6"
-        color="#FFFFFF"
-        align="center"
-        position="0 0 0.01"
-        wrap-count="40">
-      </a-text>
+        <a-text
+          id="arText"
+          value=""
+          width="1.6"
+          color="#FFFFFF"
+          align="center"
+          position="0 0 0.01"
+          wrap-count="40">
+        </a-text>
+
+      </a-entity>
 
     </a-entity>
 
-  </a-entity>
-
-</a-camera>
-
+  </a-camera>
 
 </a-scene>
 
@@ -184,16 +179,11 @@ const CURRENT_PROPERTY = getPropertyFromURL();
   <script>
   let hideTimer = null;
   let currentUtterance = null;
-  function applyBranding() {
-  const panel = document.getElementById("arPanel");
-  const plane = document.getElementById("arPlane");
-  const text = document.getElementById("arText");
-
-  if (!panel || !plane || !text) return;
-
+ function applyBranding() {
   const config = PROPERTY_CONFIG[CURRENT_PROPERTY];
   if (!config) return;
 
+  const plane = document.getElementById("arPlane");
   plane.setAttribute("color", config.color);
 
   const langKey = CURRENT_LANG.startsWith("en") ? "en" : "es";
@@ -202,33 +192,60 @@ const CURRENT_PROPERTY = getPropertyFromURL();
 
 
 
-
   function speak(text) {
   if (currentUtterance) {
     window.speechSynthesis.cancel();
   }
 
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = CURRENT_LANG;
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  currentUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
 }
 
-function showARAnswer(text) {
-  const panel = document.getElementById("arPanel");
-  const arText = document.getElementById("arText");
 
-  if (!panel || !arText) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
 
-  arText.setAttribute("value", text);
-  panel.setAttribute("scale", "1 1 1");
+    currentUtterance = utterance;
+    window.speechSynthesis.speak(utterance);
+  
 
-  // 🔊 HABLAR (idioma unificado)
-  speak(text);
+  function detectLanguage(text) {
+    const hasEnglish = /the|is|are|check/i.test(text);
+   return hasEnglish ? "en-US" : "es-ES";
+  }
 
-  if (hideTimer) clearTimeout(hideTimer);
+  function showARAnswer(text) {
+    const panel = document.getElementById("arPanel");
+    const arText = document.getElementById("arText");
 
-  hideTimer = setTimeout(() => {
-    panel.setAttribute("scale", "0 0 0");
-  }, 8000);
-}
+    arText.setAttribute("value", text);
 
+    // Mostrar panel
+    panel.setAttribute("scale", "1 1 1");
+
+    // 🔊 HABLAR
+    const lang = detectLanguage(text);
+    speak(text, lang);
+
+    // Cancelar ocultado previo
+    if (hideTimer) {
+      clearTimeout(hideTimer);
+    }
+
+    // Auto-ocultar después de 8s
+    hideTimer = setTimeout(() => {
+      panel.setAttribute("scale", "0 0 0");
+    }, 8000);
+  }
 
   async function askAI() {
     const input = document.getElementById("questionInput");
@@ -252,26 +269,12 @@ function showARAnswer(text) {
     input.value = "";
    
   }
-  </script>
-  <script>
-    const input = document.getElementById("questionInput");
-    const scene = document.querySelector("a-scene");
-
-    input.addEventListener("focus", () => {
-      scene.style.visibility = "hidden";
-      scene.style.pointerEvents = "none";
-    });
-
-    input.addEventListener("blur", () => {
-       scene.style.visibility = "visible";
-       scene.style.pointerEvents = "auto";
-    });
-</script>
-<script>
- 
   window.addEventListener("load", () => {
-  setTimeout(applyBranding, 1500);
+  applyBranding();
 });
 </script>
+
+
+
 </body>
 </html>
