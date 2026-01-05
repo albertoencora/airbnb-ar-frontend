@@ -25,13 +25,7 @@
       font-family: sans-serif;
     }
 
-   /* a-scene {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-    }*/
-
-    /* 🔥 UI ENCIMA DEL AR */
+     /* 🔥 UI ENCIMA DEL AR */
     #ui {
       position: fixed;
       bottom: 20px;
@@ -69,16 +63,12 @@
 
   <!-- ESCENA AR -->
 <a-scene
-  vr-mode-ui="enabled: false"
+ 
   embedded
+  vr-mode-ui="enabled: false"
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
 >
-<a-assets>
-  <a-asset-item
-    id="robotoFont"
-    src="https://cdn.aframe.io/fonts/Roboto-msdf.json">
-  </a-asset-item>
-</a-assets>
+
 
   <a-camera position="0 0 0" look-controls="enabled: false">
 
@@ -123,7 +113,12 @@
     </a-entity>
 
   </a-camera>
-
+  <a-assets>
+  <a-asset-item
+    id="robotoFont"
+    src="https://cdn.aframe.io/fonts/Roboto-msdf.json">
+  </a-asset-item>
+</a-assets>
 </a-scene>
 
   <!-- 🔥 UI HTML -->
@@ -160,6 +155,7 @@ const CURRENT_PROPERTY = getPropertyFromURL();
   <script>
   let hideTimer = null;
   let currentUtterance = null;
+  
   function applyBranding() {
   const config = PROPERTY_CONFIG[CURRENT_PROPERTY];
   if (!config) return;
