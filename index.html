@@ -84,45 +84,42 @@
 
   <a-camera position="0 0 0" look-controls="enabled: false">
 
-    <!-- CONTENEDOR FLOTANTE (ANIMADO) -->
-    <a-entity
-      id="arFloat"
-      position="0 0 -2"
-      animation="property: position;
-                 dir: alternate;
-                 dur: 3000;
-                 easing: easeInOutSine;
-                 loop: true;
-                 to: 0 0.15 -2">
+  <a-entity
+    id="arFloat"
+    position="0 0 -2"
+    animation="property: position;
+               dir: alternate;
+               dur: 3000;
+               easing: easeInOutSine;
+               loop: true;
+               to: 0 0.15 -2">
 
-      <!-- PANEL AR (ÚNICO) -->
-      <a-entity
-        id="arPanel"
-        scale="0 0 0">
+    <a-entity id="arPanel" scale="0 0 0">
 
-        <a-plane
-          id="arPlane"
-          width="1.8"
-          height="1"
-          color="#111"
-          opacity="0.85">
-        </a-plane>
+      <a-plane
+        id="arPlane"
+        width="1.8"
+        height="1"
+        color="#111"
+        opacity="0.85">
+      </a-plane>
 
-        <a-text
-          id="arText"
-          value=""
-          width="1.6"
-          color="#FFFFFF"
-          align="center"
-          position="0 0 0.01"
-          wrap-count="40">
-        </a-text>
-
-      </a-entity>
+      <a-text
+        id="arText"
+        value=""
+        width="1.6"
+        color="#FFFFFF"
+        align="center"
+        position="0 0 0.01"
+        wrap-count="40">
+      </a-text>
 
     </a-entity>
 
-  </a-camera>
+  </a-entity>
+
+</a-camera>
+
 
 </a-scene>
 
@@ -152,20 +149,6 @@
   }
 
   const CURRENT_LANG = getCurrentLanguage();
-</script>
-<script>
-  const input = document.getElementById("questionInput");
-  const scene = document.querySelector("a-scene");
-
-  input.addEventListener("focus", () => {
-    // Desactivar interacción AR temporalmente
-    scene.pause();
-  });
-
-  input.addEventListener("blur", () => {
-    // Reactivar AR
-    scene.play();
-  });
 </script>
 
 <script>
@@ -201,16 +184,22 @@ const CURRENT_PROPERTY = getPropertyFromURL();
   <script>
   let hideTimer = null;
   let currentUtterance = null;
- function applyBranding() {
+  function applyBranding() {
+  const panel = document.getElementById("arPanel");
+  const plane = document.getElementById("arPlane");
+  const text = document.getElementById("arText");
+
+  if (!panel || !plane || !text) return;
+
   const config = PROPERTY_CONFIG[CURRENT_PROPERTY];
   if (!config) return;
 
-  const plane = document.getElementById("arPlane");
   plane.setAttribute("color", config.color);
 
   const langKey = CURRENT_LANG.startsWith("en") ? "en" : "es";
   showARAnswer(config.welcome[langKey]);
 }
+
 
 
 
@@ -291,17 +280,24 @@ const CURRENT_PROPERTY = getPropertyFromURL();
     input.value = "";
    
   }
-  //window.addEventListener("load", () => {
-  //applyBranding();
-//});
+  </script>
+  <script>
+    const input = document.getElementById("questionInput");
+    const scene = document.querySelector("a-scene");
+
+    input.addEventListener("focus", () => {
+      scene.style.display = "none";
+    });
+
+    input.addEventListener("blur", () => {
+      scene.style.display = "block";
+    });
 </script>
 <script>
+ 
   window.addEventListener("load", () => {
-    applyBranding();
-  });
+  setTimeout(applyBranding, 1500);
+});
 </script>
-
-
-
 </body>
 </html>
