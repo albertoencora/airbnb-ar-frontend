@@ -82,15 +82,16 @@
 
   <a-entity
     id="arFloat"
+    visible="false"
     position="0 0 -2"
-    animation="property: position;
+    animation_float="property: position;
                dir: alternate;
                dur: 3000;
                easing: easeInOutSine;
                loop: true;
-               to: 0 0.15 -2">
+               to: 0 0.12 -2">
 
-    <a-entity id="arPanel" scale="0 0 0">
+    <a-entity id="arPanel" visible="false">
 
       <a-plane
         id="arPlane"
@@ -98,12 +99,12 @@
         height="1"
         color="#111"
         opacity="0.85"
-        visible="false">
+        >
       </a-plane>
 
       <a-text
         id="arText"
-        value="Prueba"
+        value=""
         width="1.4"
         color="#FFFFFF"
         align="center"
@@ -200,11 +201,35 @@ const CURRENT_PROPERTY = getPropertyFromURL();
 
 }
 
-function showARAnswer(text) {
+function showARAnswer(text, speakAudio = true) {
+  const float = document.getElementById("arFloat");
   const panel = document.getElementById("arPanel");
   const arText = document.getElementById("arText");
 
-  if (!panel || !arText) return;
+  if (!float || !panel || !arText) return;
+
+    // Texto (forzar render)
+  arText.setAttribute("value", "");
+  setTimeout(() => {
+    arText.setAttribute("value", text);
+  }, 40);
+
+    // Mostrar
+  float.setAttribute("visible", "true");
+  panel.setAttribute("visible", "true");
+
+  panel.setAttribute("animation__in", {
+    property: "scale",
+    from: "0.85 0.85 0.85",
+    to: "1 1 1",
+    dur: 300,
+    easing: "easeOutBack"
+  });
+
+    // Audio solo tras interacción
+  if (speakAudio) {
+    speak(text);
+  }
 
   arText.setAttribute("value", text);
   panel.setAttribute("scale", "1 1 1");
