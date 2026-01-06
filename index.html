@@ -71,13 +71,9 @@
 
   <!-- ESCENA AR -->
 <a-scene
-  vr-mode-ui="enabled: false"
   embedded
-  arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
   vr-mode-ui="enabled: false"
-  embedded
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
-  renderer="logarithmicDepthBuffer: true"
   device-orientation-permission-ui="enabled: false"
   cursor="rayOrigin: mouse"
 >
@@ -101,17 +97,18 @@
         width="1.8"
         height="1"
         color="#111"
-        opacity="0.85">
+        opacity="0.85"
+        visible="false">
       </a-plane>
 
       <a-text
         id="arText"
         value="Prueba"
-        width="1.6"
+        width="1.4"
         color="#FFFFFF"
         align="center"
-        position="0 0 0.01"
-        wrap-count="40">
+        position="0 0 0.08"
+        wrap-count="28">
       </a-text>
 
     </a-entity>
@@ -210,7 +207,8 @@ function showARAnswer(text) {
   if (!panel || !arText) return;
 
   arText.setAttribute("value", text);
-  panel.setAttribute("scale", "1 1 1");
+  panel.setAttribute("visible", "true");
+
 
   // 🔊 HABLAR (idioma unificado)
   speak(text);
@@ -218,7 +216,8 @@ function showARAnswer(text) {
   if (hideTimer) clearTimeout(hideTimer);
 
   hideTimer = setTimeout(() => {
-    panel.setAttribute("scale", "0 0 0");
+    panel.setAttribute("visible", "false");
+
   }, 8000);
 }
 
