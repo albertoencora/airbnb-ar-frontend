@@ -174,6 +174,17 @@ const CURRENT_PROPERTY = getPropertyFromURL();
   <script>
   let hideTimer = null;
   let currentUtterance = null;
+  let audioUnlocked = false;
+  
+   function unlockAudio() {
+    if (audioUnlocked) return;
+
+    const silent = new SpeechSynthesisUtterance("");
+    silent.volume = 0;
+    window.speechSynthesis.speak(silent);
+
+  audioUnlocked = true;
+}
   function applyBranding() {
   const panel = document.getElementById("arPanel");
   const plane = document.getElementById("arPlane");
@@ -298,17 +309,9 @@ function showARAnswer(text, speakAudio = true) {
   window.addEventListener("load", () => {
   setTimeout(applyBranding, 1500);
 });
-let audioUnlocked = false;
 
-function unlockAudio() {
-  if (audioUnlocked) return;
 
-  const silent = new SpeechSynthesisUtterance("");
-  silent.volume = 0;
-  window.speechSynthesis.speak(silent);
-
-  audioUnlocked = true;
-}
 </script>
+
 </body>
 </html>
