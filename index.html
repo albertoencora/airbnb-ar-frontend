@@ -58,10 +58,43 @@
   arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
 >
   <a-camera position="0 0 0">
-    <a-entity id="panel" position="0 0 -2" scale="0 0 0">
-      <a-plane width="1.8" height="1" color="#00c853" opacity="0.85"></a-plane>
-      <a-text id="panelText" value="" width="1.6" align="center" color="#fff" position="0 0 0.01"></a-text>
-    </a-entity>
+  <a-entity
+  id="arFloat"
+  position="0 0 -2"
+  visible="false"
+  animation__float="
+    property: position;
+    dir: alternate;
+    dur: 3000;
+    easing: easeInOutSine;
+    loop: true;
+    to: 0 0.12 -2"
+>
+
+  <!-- PANEL REAL (NO flotante) -->
+  <a-entity
+    id="arPanel"
+    scale="0 0 0">
+
+    <a-plane
+      id="arPlane"
+      width="1.8"
+      height="1"
+      opacity="0.85">
+    </a-plane>
+
+    <a-text
+      id="arText"
+      width="1.4"
+      align="center"
+      position="0 0 0.08"
+      wrap-count="28">
+    </a-text>
+
+  </a-entity>
+
+</a-entity>
+
   </a-camera>
 </a-scene>
 
@@ -119,8 +152,9 @@
   // BIENVENIDA (después de inicializar AR)
   window.addEventListener("load", () => {
     setTimeout(() => {
-      show("Bienvenido a Casa Playa Tamarindo 🌴");
-      speak("Bienvenido a Casa Playa Tamarindo");
+      //show("Bienvenido a Casa Playa Tamarindo 🌴");
+      //speak("Bienvenido a Casa Playa Tamarindo");
+      showARAnswer(config.welcome, false);
     }, 2000);
   });
 </script>
