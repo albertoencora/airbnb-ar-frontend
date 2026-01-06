@@ -207,8 +207,7 @@ function showARAnswer(text) {
   if (!panel || !arText) return;
 
   arText.setAttribute("value", text);
-  panel.setAttribute("visible", "true");
-
+  panel.setAttribute("scale", "1 1 1");
 
   // 🔊 HABLAR (idioma unificado)
   speak(text);
@@ -216,8 +215,7 @@ function showARAnswer(text) {
   if (hideTimer) clearTimeout(hideTimer);
 
   hideTimer = setTimeout(() => {
-    panel.setAttribute("visible", "false");
-
+    panel.setAttribute("scale", "0 0 0");
   }, 8000);
 }
 
