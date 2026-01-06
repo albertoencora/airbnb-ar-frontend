@@ -194,9 +194,20 @@ const CURRENT_PROPERTY = getPropertyFromURL();
 
 
   function speak(text) {
+  if (!text) return;
+
   if (currentUtterance) {
     window.speechSynthesis.cancel();
   }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = CURRENT_LANG || "es-ES";
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  currentUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
 
 }
 
@@ -245,6 +256,7 @@ function showARAnswer(text, speakAudio = true) {
 
 
   async function askAI() {
+    unlockAudio();
     const input = document.getElementById("questionInput");
     if (!input.value) return;
 
@@ -286,6 +298,17 @@ function showARAnswer(text, speakAudio = true) {
   window.addEventListener("load", () => {
   setTimeout(applyBranding, 1500);
 });
+let audioUnlocked = false;
+
+function unlockAudio() {
+  if (audioUnlocked) return;
+
+  const silent = new SpeechSynthesisUtterance("");
+  silent.volume = 0;
+  window.speechSynthesis.speak(silent);
+
+  audioUnlocked = true;
+}
 </script>
 </body>
 </html>
