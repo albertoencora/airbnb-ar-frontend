@@ -107,7 +107,7 @@
         width="1.4"
         color="#FFFFFF"
         align="center"
-        position="0 0 0.08"
+        position="0 0 0.15"
         wrap-count="28">
       </a-text>
 
@@ -206,6 +206,8 @@ const CURRENT_PROPERTY = getPropertyFromURL();
   if (!config) return;
 
   plane.setAttribute("color", config.color);
+  panel.setAttribute("scale", "1 1 1");
+  panel.setAttribute("visible", "true");
 
   const langKey = CURRENT_LANG.startsWith("en") ? "en" : "es";
   showARAnswer(config.welcome[langKey]);
@@ -237,7 +239,7 @@ function showARAnswer(text, speakAudio = true) {
   const panel = document.getElementById("arPanel");
   const arText = document.getElementById("arText");
 
-  if (!float || !panel || !arText) return;
+  if (!panel || !arText) return;
 
     // Texto (forzar render)
   arText.setAttribute("value", "");
@@ -248,6 +250,8 @@ function showARAnswer(text, speakAudio = true) {
     // Mostrar
   //float.setAttribute("visible", "true");
   panel.setAttribute("scale", "1 1 1");
+   panel.setAttribute("visible", "true");
+   
    if (speakAudio) speak(text);
 
     if (hideTimer) clearTimeout(hideTimer);
@@ -264,21 +268,21 @@ function showARAnswer(text, speakAudio = true) {
  // });
 
     // Audio solo tras interacción
-  if (speakAudio) {
-    speak(text);
-  }
+  //if (speakAudio) {
+   // speak(text);
+  //}
 
-  arText.setAttribute("value", text);
-  panel.setAttribute("scale", "1 1 1");
+ // arText.setAttribute("value", text);
+  //panel.setAttribute("scale", "1 1 1");
 
   // 🔊 HABLAR (idioma unificado)
  // speak(text);
 
-  if (hideTimer) clearTimeout(hideTimer);
+  //if (hideTimer) clearTimeout(hideTimer);
 
-  hideTimer = setTimeout(() => {
-    panel.setAttribute("scale", "0 0 0");
-  }, 8000);
+  //hideTimer = setTimeout(() => {
+  //  panel.setAttribute("scale", "0 0 0");
+  //}, 8000);
 }
 
 
