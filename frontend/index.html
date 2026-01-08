@@ -196,7 +196,7 @@ console.log("CONFIG:", PROPERTY_CONFIG[CURRENT_PROPERTY]);
 
   audioUnlocked = true;
 }
-  function applyBranding() {
+  function applyBranding(playAudio = false) {
   const panel = document.getElementById("arPanel");
   const plane = document.getElementById("arPlane");
   const text = document.getElementById("arText");
@@ -211,7 +211,7 @@ console.log("CONFIG:", PROPERTY_CONFIG[CURRENT_PROPERTY]);
   panel.setAttribute("visible", "true");
 
   const langKey = CURRENT_LANG.startsWith("en") ? "en" : "es";
-  showARAnswer(config.welcome[langKey]);
+  showARAnswer(config.welcome[langKey], playAudio);
 }
 
 
@@ -289,6 +289,7 @@ function showARAnswer(text, speakAudio = true) {
 
   async function askAI() {
     unlockAudio();
+    applyBranding(true);   
     const input = document.getElementById("questionInput");
     if (!input.value) return;
 
@@ -330,7 +331,7 @@ function showARAnswer(text, speakAudio = true) {
  const sceneTest = document.querySelector("a-scene");
 
 sceneTest.addEventListener("loaded", () => {
-  applyBranding();
+  applyBranding(false);
 });
 
 
