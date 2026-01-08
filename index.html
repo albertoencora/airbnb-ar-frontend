@@ -178,7 +178,8 @@
 }
 
 const CURRENT_PROPERTY = getPropertyFromURL();
-
+console.log("CURRENT_PROPERTY:", CURRENT_PROPERTY);
+console.log("CONFIG:", PROPERTY_CONFIG[CURRENT_PROPERTY]);
 </script>
 
   <script>
@@ -251,7 +252,7 @@ function showARAnswer(text, speakAudio = true) {
   //float.setAttribute("visible", "true");
   panel.setAttribute("scale", "1 1 1");
    panel.setAttribute("visible", "true");
-   
+
    if (speakAudio) speak(text);
 
     if (hideTimer) clearTimeout(hideTimer);
