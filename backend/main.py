@@ -68,22 +68,21 @@ class AskRequest(BaseModel):
 @app.post("/ask")
 def ask(req: AskRequest):
     try:
-        # 1) Cargar entidad (1 sola vez)
+        # 1) Cargar entidad
         entity = load_property_data(req.property_id)
-        place_type = entity.get("type", "generic")
+
         # 2) Contexto desde entidad
         context_text = build_context(entity)
 
         # 3) Prompt universal
         system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
             entity_name=entity.get("name", req.property_id),
-            entity_type=entity.get("entity_type", "entity"),
-            place_type=place_type,
+            entity_type=entity.get("type", "generic"),
             language=req.language or "es",
             context=context_text
         )
 
-        # 4) Recomendaciones dinámicas
+        # 4) Recomendaciones dinámicas (opcional)
         intent = detect_intent(req.question)
         suggestions = RECOMMENDATIONS.get(intent, [])
 
@@ -102,13 +101,23 @@ def ask(req: AskRequest):
             model=OPENAI_MODEL,
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "system", "content": recommendation_text},
+                # si quieres meter recomendaciones, puedes activar esto:
+                # {"role": "system", "content": recommendation_text},
                 {"role": "user", "content": req.question}
             ],
             temperature=0.3
         )
 
-        return {"answer": response.choices[0].message.content}
+        # ✅ Respuesta segura (evita null/None)
+        answer = None
+
+        if response.choices and response.choices[0].message:
+            answer = response.choices[0].message.content
+
+        if not answer:
+            answer = "No tengo esa información, por favor consulta con el encargado."
+
+        return {"answer": answer}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

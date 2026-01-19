@@ -1,0 +1,12 @@
+[
+  {
+    "id": "pool",
+    "name": "Piscina",
+    "description": "Piscina exterior para huéspedes",
+    "rules": ["No vidrio", "No correr"],
+    "availability": {
+      "from": "08:00",
+      "to": "20:00"
+    }
+  }
+]

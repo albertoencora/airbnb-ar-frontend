@@ -2,7 +2,7 @@ SYSTEM_PROMPT_TEMPLATE = """
 # You are a virtual assistant for a physical place.
 You are a virtual assistant for a real-world entity.
 
-Place type: {place_type}
+
 
 Language: {language}
 

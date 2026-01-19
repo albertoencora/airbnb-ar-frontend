@@ -1,0 +1,22 @@
+{
+  "id": "demo_property",
+  "name": "Casa Playa Tamarindo",
+  "type": "airbnb",
+  "location": {
+    "country": "Costa Rica",
+    "province": "Guanacaste",
+    "city": "Santa Cruz",
+    "address": "Frente a carretera principal"
+  },
+  "branding": {
+    "primary_color": "#00c853",
+    "welcome": {
+      "es": "Bienvenido a Casa Playa Tamarindo 🌴 ¿En qué te puedo ayudar?",
+      "en": "Welcome to Casa Playa Tamarindo 🌴 How can I help you?"
+    }
+  },
+  "contact": {
+    "whatsapp": "+50600000000",
+    "host_name": "Alberto"
+  }
+}
