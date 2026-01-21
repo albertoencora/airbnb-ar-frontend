@@ -1,0 +1,22 @@
+{
+  "id": "ferreteria_demo",
+  "name": "Ferreteria Perlin",
+  "type": "hardware_store",
+  "location": {
+    "country": "Costa Rica",
+    "province": "Guanacaste",
+    "city": "Santa Cruz",
+    "address": "Frente a banco principal"
+  },
+  "branding": {
+    "primary_color": "#ff9800",
+    "welcome": {
+      "es": "Bienvenido a ferreteria Perlin ¿En qué te puedo ayudar?",
+      "en": "Welcome to store 🌴 How can I help you?"
+    }
+  },
+  "contact": {
+    "whatsapp": "+50600000000",
+    "host_name": "Alberto"
+  }
+}

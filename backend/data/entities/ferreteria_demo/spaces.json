@@ -1,0 +1,11 @@
+ [
+  { 
+    
+      "id": "aisle_3",
+      "name": "Pasillo 3 - Sierras",
+      "description": "En el pasillo 3 encontrarás todo lo relacionado a sierras.",
+      "items": ["Sierras eléctricas", "Sierras de banco"],
+      "availability": { "from": "08:00", "to": "21:00" }
+    
+  }
+]

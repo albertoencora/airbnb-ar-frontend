@@ -1,0 +1,13 @@
+[
+    {
+      "id": "delivery",
+      "name": "Entrega a domicilio",
+      "details": "Disponible en Santa Cruz y alrededores. Se coordina en caja."
+    },
+    {
+      "id": "cutting",
+      "name": "Corte de material",
+      "details": "Corte de tubos y madera según disponibilidad del personal."
+    }
+]
+  

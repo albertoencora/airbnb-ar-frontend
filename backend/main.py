@@ -70,7 +70,8 @@ def ask(req: AskRequest):
     try:
         # 1) Cargar entidad
         entity = load_property_data(req.property_id)
-
+        print("DEBUG entity type:", type(entity))
+        print("DEBUG entity value:", entity)
         # 2) Contexto desde entidad
         context_text = build_context(entity)
 
