@@ -1,0 +1,15 @@
+[
+  {
+    "id": "wifi",
+    "name": "WiFi",
+    "details": {
+      "network": "TamarindoWifi",
+      "password": "12345678"
+    }
+  },
+  {
+    "id": "ac",
+    "name": "Aire acondicionado",
+    "how_to_use": "Usa el control remoto, botón ON y ajusta temperatura entre 22-24°C."
+  }
+]
