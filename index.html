@@ -64,6 +64,34 @@
       font-weight: bold;
       font-size: 16px;
     }
+    #suggestions {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 92vw;
+  padding: 6px 10px;
+}
+
+.suggestion-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.suggestion-btn:active {
+  transform: scale(0.97);
+}
   </style>
 </head>
 
@@ -111,6 +139,18 @@
         wrap-count="28">
       </a-text>
 
+<a-ring
+  id="arLoader"
+  radius-inner="0.05"
+  radius-outer="0.08"
+  position="0 -0.25 0.1"
+  rotation="0 0 0"
+  theta-start="20"
+  theta-length="280"
+  color="#ffffff"
+  visible="false"
+  animation="property: rotation; to: 0 0 360; loop: true; dur: 700; easing: linear"
+></a-ring>
     </a-entity>
 
   </a-entity>
@@ -125,6 +165,7 @@
   
     <button id="sendBtn" onclick="askAI()">Enviar</button>
   </div>
+  
   <script>
   function getLanguageFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -143,6 +184,7 @@
 </script>
 
 <script>
+  let BACKEND_SUGGESTIONS = null;
   const PROPERTY_CONFIG = {
   demo_property: {
     name: "Casa Playa Tamarindo",
@@ -382,6 +424,31 @@ function showARAnswer(text, speakAudio = true) {
 }
 
 
+function showLoader() {
+  const panel = document.getElementById("arPanel");
+  const arText = document.getElementById("arText");
+  const loader = document.getElementById("arLoader");
+
+  if (panel) {
+    panel.setAttribute("scale", "1 1 1");
+    panel.setAttribute("visible", "true");
+  }
+
+  if (arText) {
+    arText.setAttribute("value", "");
+  }
+
+  if (loader) {
+    loader.setAttribute("visible", "true");
+  }
+}
+
+function hideLoader() {
+  const loader = document.getElementById("arLoader");
+  if (loader) loader.setAttribute("visible", "false");
+}
+
+
  function setLoading(isLoading) {
   const btn = document.getElementById("sendBtn");
   const input = document.getElementById("questionInput");
@@ -394,6 +461,30 @@ function showARAnswer(text, speakAudio = true) {
   if (input) {
     input.disabled = isLoading;
   }
+}
+
+function renderSuggestionsFromBackend() {
+  const container = document.getElementById("suggestions");
+  if (!container || !BACKEND_SUGGESTIONS) return;
+
+  const langKey = CURRENT_LANG.startsWith("en") ? "en" : "es";
+  const list = BACKEND_SUGGESTIONS[langKey] || [];
+
+  container.innerHTML = "";
+
+  list.forEach((q) => {
+    const btn = document.createElement("button");
+    btn.className = "suggestion-btn";
+    btn.textContent = q;
+
+    btn.onclick = () => {
+      const input = document.getElementById("questionInput");
+      if (input) input.value = q;
+      askAI();
+    };
+
+    container.appendChild(btn);
+  });
 }
 
 async function askAI() {
@@ -410,7 +501,8 @@ async function askAI() {
     setLoading(true);
 
     // UX: feedback inmediato
-    showARAnswer("⏳ Pensando...", false);
+    showLoader();
+    //("⏳ Pensando...", false);
 
     const res = await fetch(
       "https://gayla-subcalibre-destiny.ngrok-free.dev/ask",
@@ -426,9 +518,11 @@ async function askAI() {
       }
     );
 
+
     // Si backend respondió error
     if (!res.ok) {
       let detail = "";
+       hideLoader();
       try {
         const err = await res.json();
         detail = err?.detail ? ` (${err.detail})` : "";
@@ -439,26 +533,40 @@ async function askAI() {
     }
 
     const data = await res.json();
+    if (data.suggestions) {
+ // window.LAST_SUGGESTIONS = data.suggestions;
+  //renderSuggestionsFromBackend();
+  BACKEND_SUGGESTIONS = data.suggestions;
+  renderSuggestionsFromBackend();
+}
+//window.RUNTIME_SUGGESTIONS = data.suggestions || {};
+ //   const answer = data?.answer;
+  //  if (!answer) {
+  //    showARAnswer("⚠️ Respuesta vacía. Intenta otra vez.", false);
+   //   return;
+   // }
+   const answer = data?.answer;
 
-    const answer = data?.answer;
-    if (!answer) {
-      showARAnswer("⚠️ Respuesta vacía. Intenta otra vez.", false);
-      return;
-    }
+hideLoader();
 
-    showARAnswer(answer, true);
-    input.value = "";
+if (!answer) {
+  showARAnswer("⚠️ Respuesta vacía. Intenta otra vez.", false);
+  return;
+}
+
+showARAnswer(answer, true);
+input.value = "";
+
 
   } catch (err) {
     console.error("Fetch error:", err);
+    hideLoader();
     showARAnswer("⚠️ Error de red. Revisa tu conexión o ngrok.", false);
   } finally {
     setLoading(false);
   }
 
- const data = await res.json();
-    showARAnswer(data.answer  || "Error: no llegó respuesta del backend.");
-    input.value = "";
+ 
 }
 
 speechSynthesis.onvoiceschanged = () => {
@@ -484,14 +592,55 @@ speechSynthesis.onvoiceschanged = () => {
 </script>
 <script>
  
- const sceneTest = document.querySelector("a-scene");
+ //const sceneTest = document.querySelector("a-scene");
 
-sceneTest.addEventListener("loaded", () => {
-  applyBranding(false);
-});
+//sceneTest.addEventListener("loaded", () => {
+//  applyBranding(false);
+ // renderSuggestions();
+//});
+
+
 
 
 </script>
+<script>
+const sceneTest = document.querySelector("a-scene");
 
+sceneTest.addEventListener("loaded", async () => {
+  applyBranding(false);
+  setTimeout(() => {
+  renderSuggestionsFromBackend();
+}, 300);
+
+  // 🔹 Cargar suggestions al iniciar (llamada silenciosa)
+  try {
+    const res = await fetch(
+      "https://gayla-subcalibre-destiny.ngrok-free.dev/ask",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          property_id: CURRENT_PROPERTY,
+          question: "init",
+          language: CURRENT_LANG.startsWith("en") ? "en" : "es"
+        })
+      }
+    );
+
+    if (!res.ok) return;
+
+    const data = await res.json();
+
+    if (data.suggestions) {
+      BACKEND_SUGGESTIONS = data.suggestions;
+      renderSuggestionsFromBackend();
+    }
+
+  } catch (err) {
+    console.warn("No se pudieron cargar suggestions iniciales");
+  }
+});
+</script>
+<div id="suggestions"></div>
 </body>
 </html>
