@@ -18,5 +18,17 @@
   "contact": {
     "whatsapp": "+50600000000",
     "host_name": "Alberto"
-  }
+  },
+   "suggestions": {
+      "es": [
+        "¿Cuál es la clave del WiFi?",
+        "¿A qué hora es el check-in?",
+        "¿A qué hora es el check-out?"
+      ],
+      "en": [
+        "What is the WiFi password?",
+        "What time is check-in?",
+        "What time is check-out?"
+      ]
+    }
 }

@@ -119,7 +119,9 @@ def ask(req: AskRequest):
         if not answer:
             answer = "No tengo esa información, por favor consulta con el encargado."
 
-        return {"answer": answer}
+        return {"answer": answer,  
+                "suggestions": entity.get("suggestions", {})}
+    
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

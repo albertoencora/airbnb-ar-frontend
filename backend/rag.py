@@ -152,6 +152,7 @@ def load_property_data(entity_id : str) -> dict:
      #       f"No existe el archivo de datos para la entidad: {property_id} -> {path}"
      #  )
      entity = _load_json(os.path.join(entity_path, "entity.json"), {})
+     suggestions = _load_json(os.path.join(entity_path, "entity.json"), {})
      spaces = _load_json(os.path.join(entity_path, "spaces.json"), [])
      services = _load_json(os.path.join(entity_path, "services.json"), [])
      rules = _load_json(os.path.join(entity_path, "rules.json"), [])
@@ -165,6 +166,7 @@ def load_property_data(entity_id : str) -> dict:
      entity["faqs"] = faqs
      entity["schedules"] = schedules
      entity["recommendations"] = recommendations
+     entity["suggestions"] = suggestions
     #with open(path, "r", encoding="utf-8") as f:
        #return json.load(f)
      return entity
