@@ -1,27 +1,36 @@
-{
-  "services": [
-    {
-      "id": "wifi",
-      "name": "WiFi",
-      "details": {
-        "network": "HotelTamarindo_WiFi",
-        "password": "tamarindo2025"
-      }
-    },
-    {
-      "id": "breakfast",
-      "name": "Desayuno",
-      "details": "Incluido de 7:00 AM a 9:30 AM en el restaurante."
-    },
-    {
-      "id": "housekeeping",
-      "name": "Limpieza",
-      "details": "Servicio diario de 9:00 AM a 2:00 PM."
-    },
-    {
-      "id": "reception",
-      "name": "Recepción",
-      "details": "Disponible de 7:00 AM a 10:00 PM."
-    }
-  ]
-}
+[
+  {
+    "id": "ac",
+    "name": "Aire acondicionado",
+    "how_to_use": "Usa el control remoto, botón ON y ajusta temperatura entre 22-24°C."
+   },
+  {
+    "id": "wifi",
+    "name": "WiFi",
+    "how_to_use": "Conéctese a la red WiFi del hotel desde su dispositivo.",
+    "details": "La clave del WiFi se encuentra en la habitación o puede solicitarla en recepción."
+  },
+  {
+    "id": "housekeeping",
+    "name": "Servicio de limpieza",
+    "how_to_request": "Puede solicitar limpieza contactando a recepción o por WhatsApp.",
+    "details": "El servicio de limpieza se ofrece una vez al día según disponibilidad."
+  },
+  {
+    "id": "reception",
+    "name": "Recepción",
+    "how_to_use": "Puede acudir a recepción durante el horario establecido.",
+    "details": "Si no hay personal disponible, puede comunicarse por WhatsApp."
+  },
+  {
+    "id": "breakfast",
+    "name": "Desayuno",
+    "details": "El desayuno puede estar incluido según el tipo de reserva. Consulte en recepción."
+  },
+  {
+    "id": "transport",
+    "name": "Transporte y tours",
+    "details": "El hotel puede ayudarle a coordinar transporte o tours con proveedores locales."
+  }
+]
+

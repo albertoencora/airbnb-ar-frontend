@@ -1,20 +1,26 @@
-{
-  "faqs": [
-    {
-      "question": "¿A qué hora es el check-in?",
-      "answer": "El check-in es a partir de las 3:00 PM."
-    },
-    {
-      "question": "¿A qué hora es el check-out?",
-      "answer": "El check-out es a las 11:00 AM."
-    },
-    {
-      "question": "¿El hotel tiene WiFi?",
-      "answer": "Sí, el WiFi es gratuito en todo el hotel."
-    },
-    {
-      "question": "¿Incluye desayuno?",
-      "answer": "Sí, el desayuno está incluido."
-    }
-  ]
-}
+[
+  {
+    "question": "¿A qué hora es el desayuno?",
+    "answer": "Eldesayuno es a las 8:00 AM."
+  },
+  {
+    "question": "¿A qué hora es el check-out?",
+    "answer": "El check-out es antes de las 11:00 AM."
+  },
+  {
+    "question": "¿Hay recepción 24 horas?",
+    "answer": "La recepción tiene un horario definido. Si no hay personal disponible, puede contactarnos por WhatsApp."
+  },
+  {
+    "question": "¿El hotel ofrece desayuno?",
+    "answer": "El desayuno depende del plan de su reserva. Consulte en recepción para más detalles."
+  },
+  {
+    "question": "¿Se permiten mascotas?",
+    "answer": "Las políticas sobre mascotas pueden variar. Por favor consulte con el hotel."
+  },
+  {
+    "question": "¿Dónde puedo estacionar?",
+    "answer": "El hotel cuenta con estacionamiento para huéspedes según disponibilidad."
+  }
+]

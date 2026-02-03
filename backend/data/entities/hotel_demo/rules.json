@@ -1,8 +1,10 @@
-{
-  "rules": [
-    "No fumar dentro de las habitaciones.",
-    "No se permiten fiestas.",
-    "Mascotas no permitidas.",
-    "Respete el horario de silencio después de las 10:00 PM."
-  ]
-}
+[
+"No se permiten fiestas ni eventos.",
+"Horario de silencio de 10:00 PM a 7:00 AM.",
+"No se permite fumar dentro de las habitaciones.",
+"Las visitas externas no están permitidas en las habitaciones.",
+"Las áreas comunes deben usarse de manera respetuosa.",
+"Cualquier daño a la propiedad será cobrado al huésped responsable.",
+"El hotel no se hace responsable por objetos personales olvidados.",
+"Por seguridad, mantenga puertas y ventanas cerradas al salir."
+]

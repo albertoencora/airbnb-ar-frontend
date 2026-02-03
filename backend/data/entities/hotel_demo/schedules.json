@@ -1,5 +1,8 @@
 {
-  "checkin": "Después de las 3:00 PM",
-  "checkout": "Antes de las 11:00 AM",
-  "quiet_hours": "10:00 PM - 7:00 AM"
+  "check_in": "A partir de las 2:00 PM",
+  "check_out": "Hasta las 11:00 AM",
+  "reception": "Disponible de 7:00 AM a 9:00 PM",
+  "housekeeping": "Servicio diario entre 9:00 AM y 2:00 PM",
+  "breakfast": "De 7:00 AM a 9:30 AM",
+  "quiet_hours": "De 10:00 PM a 7:00 AM"
 }
