@@ -64,9 +64,18 @@ class AskRequest(BaseModel):
     question: str
     language: Optional[str] = "es"
 
+NO_INFO_MESSAGES = {
+    "es": "No tengo esa información test, por favor consulta con el encargado.",
+    "en": "I don't have that information. Please contact the host."
+}
 
 @app.post("/ask")
+
+
+
 def ask(req: AskRequest):
+    lang = (req.language or "es").lower()
+    lang_key = "en" if lang.startswith("en") else "es"
     try:
         # 1) Cargar entidad
         entity = load_property_data(req.property_id)
@@ -116,8 +125,22 @@ def ask(req: AskRequest):
         if response.choices and response.choices[0].message:
             answer = response.choices[0].message.content
 
-        if not answer:
-            answer = "No tengo esa información, por favor consulta con el encargado."
+        #if not answer:
+        #    answer = "No tengo esa información, por favor consulta con el encargado."
+        LOW_QUALITY_PATTERNS = [
+        "no tengo esa información",
+        "no dispongo de esa información",
+        "no cuento con esa información",
+        "i don't have that information",
+        "i do not have that information"
+        ]
+        answer_text = answer.lower()
+
+        is_generic = any(p in answer_text for p in LOW_QUALITY_PATTERNS)
+        if not answer or is_generic:
+            answer = NO_INFO_MESSAGES.get(lang_key, NO_INFO_MESSAGES["es"])
+        #if not answer:
+        #     answer = NO_INFO_MESSAGES.get(lang_key, NO_INFO_MESSAGES["es"])
 
         return {"answer": answer,  
                 "suggestions": entity.get("suggestions", {}).get("suggestions", {})}
