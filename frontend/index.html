@@ -144,7 +144,8 @@
         color="#e5e7eb"
         align="center"
         position="0 0 0.15"
-        wrap-count="30">
+        wrap-count="33"
+        scale="0.8 0.8 0.8">
       </a-text>
 
 <a-ring
@@ -414,7 +415,20 @@ function showARAnswer(text, speakAudio = true) {
     // Texto (forzar render)
   arText.setAttribute("value", "");
   setTimeout(() => {
-    arText.setAttribute("value", text);
+    //arText.setAttribute("value", text);
+    const MAX_LENGTH = 420; // ajustable
+
+    let finalText = text;
+
+   if (text.length > MAX_LENGTH) {
+  finalText = text.substring(0, MAX_LENGTH) + "...";
+  }
+
+arText.setAttribute("value", "");
+setTimeout(() => {
+  arText.setAttribute("value", finalText);
+}, 50);
+
   }, 50);
 
     // Mostrar
