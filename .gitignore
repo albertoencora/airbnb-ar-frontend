@@ -4,3 +4,7 @@ __pycache__/
 *.log
 .DS_Store
 Thumbs.db
+*.pyc
+backend/__pycache__/
+frontend/__pycache__/
+__pycache__/

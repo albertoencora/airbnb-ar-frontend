@@ -1,6 +1,6 @@
 {
   "id": "hotel_demo",
-  "name": "Hotel Playa Tamarindo",
+  "name": "Hotel Tamarindo",
   "type": "hotel",
   "location": {
     "country": "Costa Rica",
@@ -22,12 +22,12 @@
    "suggestions": {
       "es": [
         "¿Cuál es la clave del WiFi?",
-        "¿A qué hora es el desayuno?",
+        "¿A qué hora es el check-in?",
         "¿A qué hora es el check-out?"
       ],
       "en": [
         "What is the WiFi password?",
-        "What time is breakfast?",
+        "What time is check-in?",
         "What time is check-out?"
       ]
     }
