@@ -14,7 +14,17 @@
       "es": "Bienvenido a hotel Tamarindo 🌴 ¿En qué te puedo ayudar?",
       "en": "Welcome to hotel Tamarindo 🌴 How can I help you?"
     }
+  "type": "hotel",
+  "name": "Hotel Tamarindo Demo",
+  "category": "boutique_hotel",
+  "location": {
+    "country": "Costa Rica",
+    "province": "Guanacaste",
+    "city": "Tamarindo",
+    "address": "Frente a la playa, Tamarindo"
   },
+  "languages": ["es", "en"],
+  "timezone": "America/Costa_Rica",
   "contact": {
     "whatsapp": "+50600000000",
     "host_name": "Recepcion"
@@ -31,4 +41,10 @@
         "What time is check-out?"
       ]
     }
+    "front_desk": "+506 2222 3333",
+    "whatsapp": "+506 8888 9999",
+    "email": "info@hoteltamarindo.demo"
+  },
+  "check_in": "15:00",
+  "check_out": "11:00"
 }
